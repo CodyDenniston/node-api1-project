@@ -22,6 +22,18 @@ server.get('/api/users', (req, res) => {
 	res.json(users);
 });
 
+server.get('/api/users/:id', (req, res) => {
+	const id = req.params.id;
+
+	const user = users.find((user) => user.id == id);
+
+	if (user) {
+		res.status(200).json(user);
+	} else {
+		res.status(404).json({ message: 'user not found' });
+	}
+});
+
 server.post('/api/users', (req, res) => {
 	const userInfo = req.body;
 
@@ -32,7 +44,7 @@ server.post('/api/users', (req, res) => {
 	res.status(201).json(users);
 });
 
-const port = 5001; // the server is running on http:localhost5000/
+const port = 5002; // the server is running on http:localhost5000/
 server.listen(port, () => console.log(`\n== api on port ${port} ==\n`));
 
 //to run the server call node index.js
